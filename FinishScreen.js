@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   nextButton: {
+    borderRadius: 10,
     height:50,
     width:200,
     backgroundColor: "#DDDDDD",

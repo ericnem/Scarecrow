@@ -24,20 +24,40 @@ var imglst = [
   require("./assets/spiders/spider20.jpeg"),
 ]
 
+var shuffledArray = imglst.sort((a, b) => 0.5 - Math.random());
+
 export default function SessionScreen({navigation}) {
-  const shuffledArray = imglst.sort((a, b) => 0.5 - Math.random());
+
   const [showIndex, setShowIndex] = useState(0);
-  const [buttonText, setButtonText] = useState("Next")
+  const [buttonText, setButtonText] = useState("Next");
+  
   function onPress() {
-    if (showIndex < 4) {
-      setShowIndex(prevShowIndex => prevShowIndex + 1)
+    if (time == "➡"){
+      if (showIndex < 4) {
+        setShowIndex(prevShowIndex => prevShowIndex + 1);
+        setTime(exposureLength);
+      }
+      else {
+        shuffledArray = imglst.sort((a, b) => 0.5 - Math.random());
+        navigation.navigate('Finish');
+      }
+      if (showIndex == 3) {
+        setButtonText("Finish");
     }
-    else {
-      navigation.navigate('Finish')
     }
-    if (showIndex == 3) {
-      setButtonText("Finish");
-    }}
+  }
+  const exposureLength = 5;
+  const [time, setTime] = useState(exposureLength);
+
+  function updateTime() {
+    if (time > 1) {
+      setTime(time - 1);
+    } else if (time == 1) {
+      clearTimeout(timerid);
+      setTime("➡");
+    }
+  }
+  let timerid = setTimeout(updateTime, 1000)
 
   return(
     <View style = {styles.container}>
@@ -48,7 +68,7 @@ export default function SessionScreen({navigation}) {
       <TouchableOpacity 
         style = {styles.nextButton}
         onPress = {onPress}>
-        <Text style = {{fontSize: 24}}>{buttonText}</Text>
+        <Text style = {{fontSize: 50, color: "white", fontWeight: "bold"}}>{time}</Text>
       </TouchableOpacity>
     </View>
   )
@@ -67,12 +87,17 @@ const styles = StyleSheet.create({
     marginBottom: 50
   },
   nextButton: {
-    height:50,
-    width:200,
-    backgroundColor: "#DDDDDD",
+    marginLeft:5,
+    borderRadius: 100,
+    height:100,
+    width:100,
+    backgroundColor: "#1156b2",
     alignItems: 'center',
     justifyContent: 'center',
 
+  },
+  timer:{
+    fontSize: 30,
   }
 });
 
