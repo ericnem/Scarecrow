@@ -7,7 +7,7 @@ import Header from './components/Header';
 export default function WelcomeScreen({navigation}) {
   return(
     <View style={styles.container}>
-      <Header/>
+      <Header nav = {navigation}/>
       <Start nav = {navigation}/>
       <ViewProgress/>
       <StatusBar style="auto" />
